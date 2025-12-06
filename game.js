@@ -435,6 +435,35 @@ function gameStep() {
     drawGame();
 }
 
+// Yön değiştirme fonksiyonu
+function changeDirection(newDx, newDy) {
+    if (!gameRunning) return;
+    
+    // Mevcut yönü kontrol et (hem dx/dy hem de nextDx/nextDy)
+    const currentDx = nextDx !== 0 ? nextDx : dx;
+    const currentDy = nextDy !== 0 ? nextDy : dy;
+    
+    const goingUp = currentDy === -1;
+    const goingDown = currentDy === 1;
+    const goingRight = currentDx === 1;
+    const goingLeft = currentDx === -1;
+    
+    // Yeni yönü nextDx/nextDy'ye kaydet (bir sonraki adımda uygulanacak)
+    if (newDx === -1 && !goingRight) {
+        nextDx = -1;
+        nextDy = 0;
+    } else if (newDx === 1 && !goingLeft) {
+        nextDx = 1;
+        nextDy = 0;
+    } else if (newDy === -1 && !goingDown) {
+        nextDx = 0;
+        nextDy = -1;
+    } else if (newDy === 1 && !goingUp) {
+        nextDx = 0;
+        nextDy = 1;
+    }
+}
+
 // Klavye kontrolleri
 document.addEventListener('keydown', (e) => {
     const LEFT_KEY = 37;
@@ -452,36 +481,68 @@ document.addEventListener('keydown', (e) => {
     
     if (!gameRunning) return;
     
-    // Mevcut yönü kontrol et (hem dx/dy hem de nextDx/nextDy)
-    const currentDx = nextDx !== 0 ? nextDx : dx;
-    const currentDy = nextDy !== 0 ? nextDy : dy;
-    
-    const goingUp = currentDy === -1;
-    const goingDown = currentDy === 1;
-    const goingRight = currentDx === 1;
-    const goingLeft = currentDx === -1;
-    
-    // Yeni yönü nextDx/nextDy'ye kaydet (bir sonraki adımda uygulanacak)
-    if (keyPressed === LEFT_KEY && !goingRight) {
-        nextDx = -1;
-        nextDy = 0;
-    }
-    
-    if (keyPressed === UP_KEY && !goingDown) {
-        nextDx = 0;
-        nextDy = -1;
-    }
-    
-    if (keyPressed === RIGHT_KEY && !goingLeft) {
-        nextDx = 1;
-        nextDy = 0;
-    }
-    
-    if (keyPressed === DOWN_KEY && !goingUp) {
-        nextDx = 0;
-        nextDy = 1;
+    // Yön değiştirme fonksiyonunu çağır
+    if (keyPressed === LEFT_KEY) {
+        changeDirection(-1, 0);
+    } else if (keyPressed === UP_KEY) {
+        changeDirection(0, -1);
+    } else if (keyPressed === RIGHT_KEY) {
+        changeDirection(1, 0);
+    } else if (keyPressed === DOWN_KEY) {
+        changeDirection(0, 1);
     }
 });
+
+// Mobil yön butonları
+const upBtn = document.getElementById('upBtn');
+const downBtn = document.getElementById('downBtn');
+const leftBtn = document.getElementById('leftBtn');
+const rightBtn = document.getElementById('rightBtn');
+
+// Buton event listener'ları
+if (upBtn) {
+    upBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        changeDirection(0, -1);
+    });
+    upBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        changeDirection(0, -1);
+    });
+}
+
+if (downBtn) {
+    downBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        changeDirection(0, 1);
+    });
+    downBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        changeDirection(0, 1);
+    });
+}
+
+if (leftBtn) {
+    leftBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        changeDirection(-1, 0);
+    });
+    leftBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        changeDirection(-1, 0);
+    });
+}
+
+if (rightBtn) {
+    rightBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        changeDirection(1, 0);
+    });
+    rightBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        changeDirection(1, 0);
+    });
+}
 
 // Oyun başlatma
 function startGame() {
