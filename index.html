@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yılan Oyunu</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="game-header">
+            <h1>🐍 Yılan Oyunu</h1>
+            <div class="score-board">
+                <div class="score">
+                    <span>Skor:</span>
+                    <span id="score">0</span>
+                </div>
+                <div class="high-score">
+                    <span>En Yüksek:</span>
+                    <span id="highScore">0</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="game-area">
+            <canvas id="gameCanvas"></canvas>
+            <div id="gameOver" class="game-over hidden">
+                <h2>Oyun Bitti!</h2>
+                <p>Skorunuz: <span id="finalScore">0</span></p>
+                <button id="restartBtn">Tekrar Oyna</button>
+            </div>
+            <div id="startScreen" class="start-screen">
+                <h2>Yılan Oyunu</h2>
+                <p>Ok tuşları ile hareket edin</p>
+                <p>Yemekleri yiyerek büyüyün!</p>
+                <button id="startBtn">Başla</button>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <p>Kontroller: ⬅️ ⬆️ ➡️ ⬇️</p>
+        </div>
+        
+        <div class="food-info">
+            <div class="info-item">
+                <div class="food-icon red"></div>
+                <div class="info-text">
+                    <strong>Kırmızı Meyve:</strong> 10 skor verir
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="food-icon gold"></div>
+                <div class="info-text">
+                    <strong>Süper Meyve:</strong> Her 30 skorda bir gelir. 20 skor verir ve yılanı 2 birim uzatır
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="food-icon purple"></div>
+                <div class="info-text">
+                    <strong>Hız Meyvesi:</strong> Her 20 skorda bir gelir. Skor vermez ama oyunu hızlandırır
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="game.js"></script>
+</body>
+</html>
+
